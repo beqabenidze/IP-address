@@ -13,6 +13,7 @@ function App() {
     const handleSize = () => {
       window.innerWidth > 375 ? setMobile(false) : setMobile(true);
     };
+
     window.addEventListener("resize", handleSize);
     return () => window.removeEventListener("resize", handleSize);
   }, []);
@@ -22,7 +23,7 @@ function App() {
       <GlobalStyles />
       <Helmet>
         <link
-          href="https://fonts.googleapis.com/css2?family=Nova+Round&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Rubik:wght@400&display=swap"
           rel="stylesheet"
         />
       </Helmet>

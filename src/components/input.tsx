@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import arrow from "../assets/icon-arrow.svg";
-import location from "../assets/icon-location.svg";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import axios from "axios";
 
 function Input() {
   const [data, setData] = useState<any>(null);
-  const [IPAddress, setIPAddress] = useState<string>("8.8.8.8");
+  const [IPAddress, setIPAddress] = useState<any>(null);
   const [clone, setClone] = useState<string>("");
   const [valid, setValid] = useState<boolean | null>(null);
 
@@ -22,12 +21,18 @@ function Input() {
       })
       .catch((error) => {
         console.log(error);
-        console.log("awaaaaaaaaaaa");
+        setData(null);
+        console.log("afawfawfaw");
       });
   };
+  console.log(valid);
 
   useEffect(() => {
-    getIP();
+    if (valid) {
+      getIP();
+    } else {
+      setData(null);
+    }
   }, [IPAddress]);
 
   return (
@@ -35,7 +40,7 @@ function Input() {
       <h1>IP Address Tracker</h1>
       <InputWrapper>
         <input
-          style={{ border: !valid ? "1px solid red" : "" }}
+          style={{ border: valid == false ? "1px solid red" : "" }}
           type="text"
           onChange={(e) => {
             setClone(e.target.value);
@@ -44,11 +49,16 @@ function Input() {
         <div
           onClick={() => {
             setIPAddress(clone);
-            const isValid = /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/.test(
-              IPAddress
-            );
+
+            const isValid =
+              /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/gi.test(
+                clone
+              );
             setValid(isValid);
-            console.log(valid);
+            // if (valid) {
+
+            //   getIP();
+            // }
           }}
         >
           <img src={arrow} />
@@ -63,7 +73,9 @@ function Input() {
         <div>
           <p>LOCATION</p>
           <h2>
-            {data?.location.region}, {data?.location.country}
+            {data
+              ? `${data?.location.region}, ${data?.location.country}`
+              : null}
           </h2>
         </div>
         <hr></hr>

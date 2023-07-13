@@ -12,14 +12,10 @@ const GlobalStyles = createGlobalStyle`
         flex-direction: column;
         align-items: center;
         overflow-x: hidden;
-        
-        
     }
     #root{
         width: 100%;
     }
-        
-    
 `;
 
 export default GlobalStyles;

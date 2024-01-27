@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import arrow from "../assets/icon-arrow.svg";
-import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainerProps } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 function Input() {
@@ -10,6 +13,7 @@ function Input() {
   const [IPAddress, setIPAddress] = useState<any>(null);
   const [clone, setClone] = useState<string>("");
   const [valid, setValid] = useState<boolean | null>(null);
+  const [info, setInfo] = useState<boolean | null>(true);
 
   const getIP = () => {
     axios
@@ -25,7 +29,6 @@ function Input() {
         console.log("afawfawfaw");
       });
   };
-  console.log(valid);
 
   useEffect(() => {
     if (valid) {
@@ -55,16 +58,24 @@ function Input() {
                 clone
               );
             setValid(isValid);
-            // if (valid) {
-
-            //   getIP();
-            // }
           }}
         >
           <img src={arrow} />
         </div>
+        <FontAwesomeIcon
+          icon={faBars}
+          style={{
+            height: "30px",
+          }}
+          onClick={() => {
+            console.log("awdawd");
+            setInfo(!info);
+            console.log(info);
+          }}
+        />
       </InputWrapper>
-      <InfoWrapper>
+
+      <InfoWrapper style={{ display: info ? "none" : "flex" }}>
         <div>
           <p>IP ADDRESS</p>
           <h2>{IPAddress}</h2>
@@ -92,16 +103,16 @@ function Input() {
 
       {data && (
         <MapContainer
-          center={[data?.location.lat, data?.location.lng]}
+          center={[data?.location.lat, data?.location.lng] as [number, number]}
           zoom={13}
           scrollWheelZoom={true}
           style={{
-            height: "900px",
+            height: "1000px",
             width: "100vw",
             position: "absolute",
             left: "0px",
-            top: "200px",
-            zIndex: "-2",
+            top: "190px",
+            zIndex: -2,
           }}
         >
           <TileLayer
@@ -125,7 +136,7 @@ const MainInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  gap: 10px;
   color: #fff;
 `;
 
@@ -134,8 +145,9 @@ const InputWrapper = styled.div`
   width: 100%;
   max-width: 555px;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 30px;
   input {
     width: 100%;
     max-width: 555px;
@@ -149,7 +161,7 @@ const InputWrapper = styled.div`
     width: 40px;
     height: 100%;
     position: absolute;
-    right: 0px;
+    right: 30px;
     border-radius: 10px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -167,13 +179,13 @@ const InputWrapper = styled.div`
 const InfoWrapper = styled.div`
   width: 100%;
   max-width: 1100px;
-  padding: 10px;
+  padding: 0 10px;
   display: flex;
   align-items: center;
   justify-content: space-around;
   background-color: #ffffff;
   border-radius: 10px;
-
+  border: 1px solid #0750a3;
   transition: all 1s ease;
   @media (width < 800px) {
     flex-direction: column;
@@ -184,6 +196,7 @@ const InfoWrapper = styled.div`
   div {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 20px;
     p {
       color: #2c2c2c;

@@ -24,6 +24,6 @@ const HomeWrapper = styled.div`
     left: 0;
     z-index: -2;
     width: 100%;
-    height: 300px;
+    height: 190px;
   }
 `;

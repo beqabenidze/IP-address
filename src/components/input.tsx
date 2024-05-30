@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import arrow from "../assets/icon-arrow.svg";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
@@ -179,6 +179,7 @@ const InputWrapper = styled.div`
 const InfoWrapper = styled.div`
   width: 100%;
   max-width: 1100px;
+  height: fit-content;
   padding: 0 10px;
   display: flex;
   align-items: center;
